@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('node:path');
+import webpack from 'webpack';
+import pkg from './package.json';
 
+const path = require('node:path');
 const html = require('html-webpack-plugin');
 const css = require('mini-css-extract-plugin');
 const fileManager = require('filemanager-webpack-plugin');
@@ -11,6 +13,46 @@ const meta = require('./_config');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const {
+  NativeFederationTypeScriptHost
+} = require('@module-federation/native-federation-typescript/webpack');
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const {
+  NativeFederationTypeScriptRemote
+} = require('@module-federation/native-federation-typescript/webpack');
+
+const { ModuleFederationPlugin } = webpack.container;
+const { dependencies: deps } = pkg;
+const moduleFederationConfig = {
+  name: 'app1',
+  filename: 'remoteEntry.js',
+  // remotes: {
+  //   notes: 'notes@http://localhost:3000/remoteEntry.js'
+  // },
+  exposes: {
+    './CounterAppOne': './src/app.tsx'
+  },
+  shared: {
+    react: {
+      singleton: true,
+      requiredVersion: deps.react
+    },
+    'react-dom': {
+      singleton: true,
+      requiredVersion: deps['react-dom']
+    },
+    lib: {
+      singleton: true,
+      requiredVersion: false as const
+    },
+    ui: {
+      singleton: true,
+      requiredVersion: false as const
+    }
+  }
+};
 const plugins = [
   new html({
     meta: {
@@ -80,13 +122,14 @@ const plugins = [
         }
       ]
     }
-  })
+  }),
+  new ModuleFederationPlugin(moduleFederationConfig)
 ];
 
 if (!isProduction) plugins.push(new refresh());
 
 module.exports = {
-  target: 'browserslist',
+  // target: 'browserslist',
   entry: {
     index: getDirectory('src/index.tsx')
   },
@@ -101,17 +144,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: true
-            }
-          },
-          'ts-loader'
-        ]
+        // Match `.js`, `.jsx`, `.ts` or `.tsx` files
+        test: /\.[jt]sx?$/,
+        loader: 'esbuild-loader',
+        options: {
+          // JavaScript version to compile to
+          target: 'es2015'
+        }
       },
       {
         test: /\.(sass|scss|css)$/i,
@@ -145,6 +184,7 @@ module.exports = {
     minimize: isProduction
   },
   devServer: {
+    port: 3001,
     static: {
       directory: isProduction ? getDirectory('dist') : getDirectory('src')
     },
@@ -158,3 +198,4 @@ module.exports = {
 function getDirectory(directory) {
   return path.resolve(__dirname, directory);
 }
+
