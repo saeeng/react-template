@@ -1,0 +1,31 @@
+$ webpack --node-env production
+<i> [FileManagerPlugin] copied "/Users/jeonsaewoong/Documents/frontier.v2/apps/app1/src/assets/favicon/**" to "dist/favicon
+<i> [FileManagerPlugin] copied "/Users/jeonsaewoong/Documents/frontier.v2/node_modules/@builder.io/partytown/lib" to "dist/~partytown
+assets by path fonts/ 170 KiB
+  assets by path fonts/*.woff 97.7 KiB
+    asset fonts/Roboto-Medium.woff 24.6 KiB [emitted] [from: src/assets/fonts/Roboto-Medium.woff]
+    + 3 assets
+  assets by path fonts/*.woff2 72.4 KiB
+    asset fonts/Roboto-Medium.woff2 18.3 KiB [emitted] [from: src/assets/fonts/Roboto-Medium.woff2]
+    + 3 assets
+assets by path *.js 160 KiB
+  assets by chunk 136 KiB (id hint: vendors)
+    asset 50.eebeef07d7cc951a5397.js 130 KiB [emitted] [immutable] [minimized] (id hint: vendors) 1 related asset
+    asset 553.eebeef07d7cc951a5397.js 5.55 KiB [emitted] [immutable] [minimized] (id hint: vendors) 1 related asset
+  + 5 assets
+asset 901.eebeef07d7cc951a5397.css 7.07 KiB [emitted] [immutable]
+asset index.html 1.69 KiB [emitted]
+runtime modules 44.2 KiB 43 modules
+orphan modules 175 KiB (javascript) 170 KiB (asset) [orphan] 17 modules
+built modules 425 KiB (javascript) 84 bytes (share-init) 84 bytes (consume-shared) 7.69 KiB (css/mini-extract) [built]
+  javascript modules 425 KiB 17 modules
+  provide-module modules 84 bytes
+    provide shared module (default) react-dom@18.2.0 = ../../node_modules/reac...(truncated) 42 bytes [built] [code generated]
+    provide shared module (default) react@18.2.0 = ../../node_modules/react/index.js 42 bytes [built] [code generated]
+  consume-shared-module modules 84 bytes
+    consume shared module (default) react@^18.2.0 (singleton) (fallback: ../../node_...(truncated) 42 bytes [built] [code generated]
+    consume shared module (default) react-dom@^18.2.0 (singleton) (fallback: ../../n...(truncated) 42 bytes [built] [code generated]
+  css modules 7.69 KiB
+    css ../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/dist/cjs.js!../../node_modules/postcss-loader/dist/cjs.js!./src/css/global.css 6.32 KiB [built] [code generated]
+    css ../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/dist/cjs.js!../../node_modules/postcss-loader/dist/cjs.js!./src/scss/global.scss 1.37 KiB [built] [code generated]
+webpack 5.90.2 compiled successfully in 2432 ms

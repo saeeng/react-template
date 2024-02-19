@@ -43,14 +43,6 @@ const moduleFederationConfig = {
       singleton: true,
       requiredVersion: deps['react-dom']
     },
-    lib: {
-      singleton: true,
-      requiredVersion: false as const
-    },
-    ui: {
-      singleton: true,
-      requiredVersion: false as const
-    }
   }
 };
 const plugins = [
@@ -123,7 +115,8 @@ const plugins = [
       ]
     }
   }),
-  new ModuleFederationPlugin(moduleFederationConfig)
+  new ModuleFederationPlugin(moduleFederationConfig),
+  NativeFederationTypeScriptRemote({moduleFederationConfig})
 ];
 
 if (!isProduction) plugins.push(new refresh());
@@ -147,10 +140,10 @@ module.exports = {
         // Match `.js`, `.jsx`, `.ts` or `.tsx` files
         test: /\.[jt]sx?$/,
         loader: 'esbuild-loader',
-        options: {
-          // JavaScript version to compile to
-          target: 'es2015'
-        }
+        // options: {
+        //   // JavaScript version to compile to
+        //   target: 'es2015'
+        // }
       },
       {
         test: /\.(sass|scss|css)$/i,
